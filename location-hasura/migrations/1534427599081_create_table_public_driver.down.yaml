@@ -1,0 +1,3 @@
+- args:
+    sql: DROP TABLE public."driver"
+  type: run_sql

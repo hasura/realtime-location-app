@@ -1,0 +1,12 @@
+- args:
+    permission:
+      columns:
+      - id
+      - name
+      - vehicle_number
+      filter: {}
+    role: anonymous
+    table:
+      name: driver
+      schema: public
+  type: create_select_permission

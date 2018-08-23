@@ -1,0 +1,13 @@
+- args:
+    permission:
+      columns:
+      - id
+      - driver_id
+      - location
+      - timestamp
+      filter: {}
+    role: anonymous
+    table:
+      name: driver_location
+      schema: public
+  type: create_select_permission
