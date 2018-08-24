@@ -6,15 +6,17 @@ import { ApolloConsumer, Subscription } from 'react-apollo';
 import gql from 'graphql-tag';
 import {HASURA_LOCATION} from "./constants";
 
+import client from './apollo'
+import { ApolloProvider } from 'react-apollo';
+
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      driverId: 2, // TODO: set using UI
+      driverId: props.match.params.id, // TODO: set using UI
     }
   }
-
   render() {
     const LOCATION_SUBSCRIPTION = gql`
         subscription getLocation($driverId: Int!) {
@@ -81,4 +83,12 @@ class App extends Component {
   }
 }
 
-export default App;
+const ApolloWrappedComponent = (props) => {
+  return (
+    <ApolloProvider client={client}>
+      <App { ...props }/>
+    </ApolloProvider>
+  );
+};
+
+export default ApolloWrappedComponent;
