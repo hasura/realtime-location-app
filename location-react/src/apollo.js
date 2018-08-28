@@ -8,8 +8,8 @@ import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 // TODO: set to heroku app urls
-const wsurl = 'ws://localhost:8080/v1alpha1/graphql';
-const httpurl = 'http://localhost:8080/v1alpha1/graphql';
+const wsurl = 'ws://localhost:8000/v1alpha1/graphql';
+const httpurl = 'http://localhost:8000/v1alpha1/graphql';
 
 const wsLink = new WebSocketLink({
   uri: wsurl,
