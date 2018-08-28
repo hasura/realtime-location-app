@@ -24,7 +24,7 @@ export class MapContainer extends Component {
       <Map google={this.props.google}
            className="map"
            initialCenter={HASURA_LOCATION}
-           zoom={14}>
+           zoom={16}>
         <Marker
           title={'Driver position: ' + markerLocationPoint}
           name={'Driver position'}
