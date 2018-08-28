@@ -3,15 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
+import Driver from './Driver';
 import registerServiceWorker from './registerServiceWorker';
-import client from './apollo'
-import { ApolloProvider } from 'react-apollo';
-
 // Use the client just as before
+
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+const Main = () => (
+  <Router>
+    <div>
+      <Route exact path="/" component={Driver} />
+      <Route path="/driver/:id" component={App} />
+    </div>
+  </Router>
+);
 ReactDOM.render(
-  (<ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>),
+  <Main />,
   document.getElementById('root'));
 
 registerServiceWorker();

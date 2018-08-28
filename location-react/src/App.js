@@ -4,17 +4,18 @@ import './App.css';
 import GoogleApiWrapper from "./MapContainer";
 import { ApolloConsumer, Subscription } from 'react-apollo';
 import gql from 'graphql-tag';
-import {HASURA_LOCATION} from "./constants";
+
+import client from './apollo'
+import { ApolloProvider } from 'react-apollo';
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      driverId: 2, // TODO: set using UI
+      driverId: props.match.params.id,
     }
   }
-
   render() {
     const LOCATION_SUBSCRIPTION = gql`
         subscription getLocation($driverId: Int!) {
@@ -42,32 +43,26 @@ class App extends Component {
                   if (loading) return <p>Loading...</p>;
                   if (error) return <p>Error!</p>;
 
-                  let latestLocation = HASURA_LOCATION; // TODO: random init value set for now
+                  let latestLocation = null;
                   const driver = data.driver[0];
                   const latestLocationObject = driver.locations[0];
                   if (latestLocationObject) {
-                    const latestLocationPoint = latestLocationObject.location;
-                    const latestLocationSplit = latestLocationPoint.replace(/[()]/g, "").split(",").map(x => x.trim());
-
-                    latestLocation = {
-                      lat: latestLocationSplit[0],
-                      lng: latestLocationSplit[1]
-                    };
+                    latestLocation = latestLocationObject.location;
                   }
 
                   return (
                     <div className="row">
                       <div className="col-md-6">
-                        <h4>Map</h4>
-                        <div className="map_wrapper">
-                          <GoogleApiWrapper marker_location={latestLocation}/>
-                        </div>
-                      </div>
-                      <div className="col-md-6">
                         <h4>Subscription response</h4>
                         <pre>
                           { JSON.stringify(data, null, 2) }
                         </pre>
+                      </div>
+                      <div className="col-md-6">
+                        <h4>Live tracking</h4>
+                        <div className="map_wrapper">
+                          <GoogleApiWrapper marker_location={latestLocation}/>
+                        </div>
                       </div>
                     </div>
                   );
@@ -81,4 +76,12 @@ class App extends Component {
   }
 }
 
-export default App;
+const ApolloWrappedComponent = (props) => {
+  return (
+    <ApolloProvider client={client}>
+      <App { ...props }/>
+    </ApolloProvider>
+  );
+};
+
+export default ApolloWrappedComponent;
