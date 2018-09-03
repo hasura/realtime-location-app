@@ -81,7 +81,7 @@ class Driver extends Component {
                         Active drivers
                       </h3>
                       <div style={ driverText }>
-                        (Click on the driver name below to start tracking)
+                        (Driver location is updated every 5 secs to simulate live tracking)
                       </div>
                       <div className="row">
                         <table className="table">

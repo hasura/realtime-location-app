@@ -36,18 +36,7 @@ class App extends Component {
         }
     `;
 
-    const LOCATION_QUERY = `
-subscription getLocation($driverId: Int!) {
-  driver(where: {id: {_eq: $driverId}}) {
-    name
-    vehicle_number
-    locations(order_by: timestamp_desc, limit: 1) {
-      location
-      timestamp
-    }
-  }
-}
-`;
+    const queryImg = require('./assets/query.jpg');
 
     return (
       <ApolloConsumer>
@@ -69,16 +58,17 @@ subscription getLocation($driverId: Int!) {
                 'borderLeft': '1px solid #eee',
                 'paddingLeft': '20px',
               };
+              const queryImgStyle = {
+                'width': '100%',
+              };
               return (
                 <div style={ driverLocation }>
                   <div className="row">
                     <div className="col-md-6">
                       <h4>Subscription request</h4>
-                      <pre>
-                        <code>
-                          { LOCATION_QUERY }
-                      : </code>
-                      </pre>
+                      <div>
+                        <img style={ queryImgStyle } src={ queryImg } alt="Subscription query"/>
+                      </div>
                     </div>
                     <div className="col-md-6">
                       <h4>Live tracking</h4>

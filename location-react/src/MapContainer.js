@@ -5,21 +5,29 @@ import GoogleMapReact from 'google-map-react';
 import { fitBounds } from 'google-map-react/utils';
 
 import {
-  HASURA_LOCATION
+  GOOGLE_API_KEY,
+  bounds
 } from './constants'
 
 class Marker extends Component {
   render() {
+    const greatPlaceStyle = {
+      position: 'absolute',
+      top: "100%",
+      left: "50%",
+      transform: 'translate(-50%, -50%)'
+    };
     const divStyle = {
-      'background':'#232e40',
+      'background':'#ffff00',
       'borderRadius':'50%',
-      'height':'20px',
-      'width':'20px',
+      'border': '3px solid black',
+      'padding': '2px',
+      'height':'30px',
+      'width':'30px',
       'position':'relative',
-      'bottom':'-10px',
     };
     return (
-      <div>
+      <div style={ greatPlaceStyle }>
         <div style={ divStyle }>
         </div>
       </div>
@@ -28,34 +36,44 @@ class Marker extends Component {
 }
 
 export class MapContainer extends Component {
+  constructor() {
+    super();
+    this.state = {};
+    this.state.mapLoaded = false;
+  }
 	handleGoogleMapApi = (google) => {
+    this.setState({ ...this.state, ...google, mapLoaded: true});
     var directionsService = new google.maps.DirectionsService();
     directionsService.route({
-      origin: new google.maps.LatLng(12.9396, 77.6205),
-      destination: new google.maps.LatLng(12.939539,77.620593),
+      origin: new google.maps.LatLng(12.9395804,77.62047489999999),
+      destination: new google.maps.LatLng(12.9339364,77.61086039999999),
 			waypoints: [{
 				stopover: false,
-				location: new google.maps.LatLng(12.939935,77.620707)
+				location: new google.maps.LatLng(12.9400201,77.6207663)
 			},
 			{
 				stopover: false,
-				location: new google.maps.LatLng(12.939902,77.620877)
+				location: new google.maps.LatLng(12.940464,77.62026399999999)
 			},
 			{
 				stopover: false,
-				location: new google.maps.LatLng(12.939698,77.621067)
+				location: new google.maps.LatLng(12.9343753,77.6124028)
 			},
 			{
 				stopover: false,
-				location: new google.maps.LatLng(12.939363,77.621402)
+				location: new google.maps.LatLng(12.9316953,77.61384169999999)
 			},
 			{
 				stopover: false,
-				location: new google.maps.LatLng(12.939002,77.621641)
+				location: new google.maps.LatLng(12.9295913,77.61517739999999)
 			},
 			{
 				stopover: false,
-				location: new google.maps.LatLng(12.938782,77.621459)
+				location: new google.maps.LatLng(12.9311553,77.6098449)
+			},
+			{
+				stopover: false,
+				location: new google.maps.LatLng(12.9346852,77.60970669999999)
 			},
 			],
       travelMode: google.maps.TravelMode.DRIVING
@@ -64,7 +82,7 @@ export class MapContainer extends Component {
 				var polyline = new google.maps.Polyline({
 					path: [],
 					strokeColor: '#0000FF',
-					strokeWeight: 3
+					strokeWeight: 8
 				});
 				var bounds = new google.maps.LatLngBounds();
 
@@ -85,19 +103,6 @@ export class MapContainer extends Component {
 				window.alert('Directions request failed due to ' + status);
 			}
 		});
-
-
-    /*
-		var flightPath = new google.maps.Polyline({
-			path: [ {'lat': 12.939935, 'lng': 77.620707}, { 'lat': 12.939902, 'lng': 77.620877}],
-			geodesic: true,
-			strokeColor: '#33BD4E',
-			strokeOpacity: 1,
-			strokeWeight: 5
-		});
-
-		flightPath.setMap(google.map);
-    */
 	}
   render() {
     let markerLocation = null;
@@ -112,29 +117,28 @@ export class MapContainer extends Component {
       };
     }
 
-    const bounds = {
-      sw: { ...HASURA_LOCATION },
-    };
-    if ( markerLocation ) {
-      bounds.ne = {
-        ...markerLocation
-      };
-    }
-
     const size = {
       width: 320, // map width in pixels
       height: 400, // map height in pixels
     };
+
     const {center, zoom} = fitBounds(bounds, size);
     return (
-      <GoogleMapReact
-        center={center} 
-        zoom={zoom ? zoom : 18}
-        yesIWantToUseGoogleMapApiInternals
-        onGoogleApiLoaded={this.handleGoogleMapApi}
-      > 
-        <Marker lat={markerLocation.lat} lng={markerLocation.lng} />
-      </GoogleMapReact>
+      <div style={{height: '100%'}}>
+        <GoogleMapReact
+          bootstrapURLKeys={
+            {
+              key: GOOGLE_API_KEY
+            }
+          }
+          center={center} 
+          zoom={zoom}
+          yesIWantToUseGoogleMapApiInternals
+          onGoogleApiLoaded={this.handleGoogleMapApi}
+        > 
+          <Marker lat={markerLocation.lat} lng={markerLocation.lng} />
+        </GoogleMapReact>
+      </div>
     );
   }
 }
