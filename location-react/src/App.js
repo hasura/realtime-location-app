@@ -36,6 +36,19 @@ class App extends Component {
         }
     `;
 
+    const LOCATION_QUERY = `
+subscription getLocation($driverId: Int!) {
+  driver(where: {id: {_eq: $driverId}}) {
+    name
+    vehicle_number
+    locations(order_by: timestamp_desc, limit: 1) {
+      location
+      timestamp
+    }
+  }
+}
+`;
+
     return (
       <ApolloConsumer>
         {client => (
@@ -51,7 +64,7 @@ class App extends Component {
                 latestLocation = latestLocationObject.location;
               }
               const driverLocation = {
-                'width': '60%',
+                'width': '68%',
                 'float': 'right',
                 'borderLeft': '1px solid #eee',
                 'paddingLeft': '20px',
@@ -60,9 +73,11 @@ class App extends Component {
                 <div style={ driverLocation }>
                   <div className="row">
                     <div className="col-md-6">
-                      <h4>Subscription response</h4>
+                      <h4>Subscription request</h4>
                       <pre>
-                        { JSON.stringify(data, null, 2) }
+                        <code>
+                          { LOCATION_QUERY }
+                      : </code>
                       </pre>
                     </div>
                     <div className="col-md-6">
