@@ -39,7 +39,12 @@
   margin: 0;
 }
 
-.user_info .btn_wrapper button:hover {
+.user_info .btn_wrapper button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.user_info .btn_wrapper button:not([disabled]):hover {
   background-color: #e0270e;
 }
 

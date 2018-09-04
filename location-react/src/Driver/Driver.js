@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 import { ApolloConsumer, Subscription } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import client, { httpurl } from '../apollo'
+import client from '../apollo'
+import { httpurl } from '../constants';
 import { ApolloProvider } from 'react-apollo';
 
 import uuidv4 from 'uuid/v4';
@@ -25,6 +26,7 @@ class Driver extends Component {
     this.state.delay = 3000;
     this.state.locationId = 0;
     this.state.pollId = -1;
+    this.state.isLoading = false;
   }
   updateLocation() {
     if (locationData.length === this.state.locationId) {
@@ -66,6 +68,7 @@ class Driver extends Component {
     }
   }
   handleTrackLocationClick() {
+    this.setState({ ...this.state, isLoading: true });
     const insert_driver = gql`
       mutation insert_driver ($objects: [driver_insert_input!]! )  {
         insert_driver (objects: $objects){
@@ -93,8 +96,11 @@ class Driver extends Component {
       console.log(response)
       this.setState({ ...this.state, startTracking: true });
       const pollId = setInterval(this.updateLocation.bind(this), this.state.delay);
-      this.setState({ ...this.state, pollId: pollId });
-    }).catch((error) => console.error(error));
+      this.setState({ ...this.state, pollId: pollId, isLoading: false });
+    }).catch((error) => {
+      this.setState({ ...this.state, isLoading: false });
+      console.error(error)
+    });
   }
   componentWillUnmount() {
     clearInterval(this.state.pollId);
@@ -144,7 +150,7 @@ class Driver extends Component {
               <App key='2' driverId={ this.state.driverId } />
             ]
             :
-            <UserInfo userId={ this.state.driverId } handleTrackLocationClick={ this.handleTrackLocationClick.bind(this) }/>
+            <UserInfo userId={ this.state.driverId } handleTrackLocationClick={ this.handleTrackLocationClick.bind(this) } isLoading={ this.state.isLoading }/>
           }
         </div>
       </div>

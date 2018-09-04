@@ -6,10 +6,7 @@ import { HttpLink } from 'apollo-link-http';
 import { split } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-
-// TODO: set to heroku app urls
-const wsurl = 'ws://localhost:8000/v1alpha1/graphql';
-const httpurl = 'http://localhost:8000/v1alpha1/graphql';
+import { wsurl, httpurl } from './constants';
 
 const wsLink = new WebSocketLink({
   uri: wsurl,
@@ -35,7 +32,5 @@ const client = new ApolloClient({
   link,
   cache: new InMemoryCache()
 });
-export {
-  httpurl
-};
+
 export default client;

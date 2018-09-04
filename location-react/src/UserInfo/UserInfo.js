@@ -12,7 +12,7 @@ class UserInfo extends Component {
             In order to simulate live location tracking, we have created a commuter <code>{ this.props.userId }</code> for you. Click on track location button to start tracking.
           </div>
           <div className="btn_wrapper">
-            <button onClick={ this.props.handleTrackLocationClick }>
+            <button disabled={ this.props.isLoading ? true: false } onClick={ !this.props.isLoading ? this.props.handleTrackLocationClick : () => {}}>
               TRACK LOCATION
             </button>
           </div>
@@ -24,6 +24,7 @@ class UserInfo extends Component {
 
 UserInfo.propTypes = {
   userId: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   handleTrackLocationClick: PropTypes.func.isRequired,
 };
 
