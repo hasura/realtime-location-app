@@ -10,30 +10,13 @@ tables:
   delete_permissions: []
   insert_permissions: []
   object_relationships: []
-  select_permissions:
-  - comment: null
-    permission:
-      columns:
-      - id
-      - name
-      - vehicle_number
-      filter: {}
-    role: anonymous
+  select_permissions: []
   table: driver
   update_permissions: []
 - array_relationships: []
   delete_permissions: []
   insert_permissions: []
   object_relationships: []
-  select_permissions:
-  - comment: null
-    permission:
-      columns:
-      - id
-      - driver_id
-      - location
-      - timestamp
-      filter: {}
-    role: anonymous
+  select_permissions: []
   table: driver_location
   update_permissions: []

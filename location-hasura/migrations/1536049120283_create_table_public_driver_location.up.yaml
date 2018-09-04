@@ -1,5 +1,5 @@
 - args:
-    sql: CREATE TABLE public."driver_location"("id" serial NOT NULL, "driver_id" integer
+    sql: CREATE TABLE public."driver_location"("id" serial NOT NULL, "driver_id" text
       NOT NULL, "location" text NOT NULL, "timestamp" timestamptz NOT NULL DEFAULT
       now(), PRIMARY KEY ("id") );
   type: run_sql

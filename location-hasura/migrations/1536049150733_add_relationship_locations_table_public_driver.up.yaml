@@ -1,0 +1,12 @@
+- args:
+    name: locations
+    table:
+      name: driver
+      schema: public
+    using:
+      foreign_key_constraint_on:
+        column: driver_id
+        table:
+          name: driver_location
+          schema: public
+  type: create_array_relationship

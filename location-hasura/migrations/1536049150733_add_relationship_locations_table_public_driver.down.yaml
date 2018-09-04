@@ -1,6 +1,6 @@
 - args:
-    role: anonymous
+    relationship: locations
     table:
       name: driver
       schema: public
-  type: drop_select_permission
+  type: drop_relationship
