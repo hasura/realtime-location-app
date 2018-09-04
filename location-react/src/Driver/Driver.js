@@ -14,10 +14,6 @@ import './Driver.css';
 
 const { query } = require('graphqurl');
 
-
-/* Start from the scratch */
-/* Keep mutating the state until the page is refreshed or something */
-
 class Driver extends Component {
   constructor() {
     super();
@@ -119,7 +115,6 @@ class Driver extends Component {
           <h1 className="App-title">Realtime location tracking example</h1>
         </header>
         <div className="container">
-
           { this.state.startTracking ?
             [
               <ApolloConsumer key={'1'}>

@@ -119,13 +119,10 @@ export class MapContainer extends Component {
     return HASURA_LOCATION;
   }
   render() {
-    // let markerLocation = null;
-
     const size = {
       width: 320, // map width in pixels
       height: 400, // map height in pixels
     };
-
     const {center, zoom} = fitBounds(bounds, size);
     return (
       <div style={{height: '100%'}}>
