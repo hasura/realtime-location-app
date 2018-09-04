@@ -62,9 +62,9 @@ class App extends Component {
                   <div className="row ">
                     <div className="col-md-6 col-xs-12 request_block">
                       <div className="subscription_wrapper">
-                        <h4>Hasura Subscription request</h4>
+                        <h4>Live query</h4>
                         <div className="subscription_query">
-                          The GraphQL subscription query required to fetch the realtime location data is as below.
+                          The GraphQL subscription required to fetch the realtime location data.
                         </div>
                         <div>
                           <img style={ queryImgStyle } src={ queryImg } alt="Subscription query"/>
@@ -73,6 +73,9 @@ class App extends Component {
                     </div>
                     <div className="col-md-6 col-xs-12">
                       <h4>Live tracking</h4>
+                      <div className="subscription_query">
+                        Location is updated every 3 secs to simulate live tracking
+                      </div>
                       <div className="map_wrapper">
                         <GoogleApiWrapper marker_location={latestLocation}/>
                       </div>

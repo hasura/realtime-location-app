@@ -9,7 +9,7 @@ class UserInfo extends Component {
       <div className="user_info">
         <div className="detail">
           <div className="onboarding">
-            In order to simulate live location tracking, we have created a commuter <code>{ this.props.userId }</code> for you. Click on track location button to start tracking.
+            We've created a sample vehicle for this demo. Click on the following button to start tracking this vehicle's realtime location.
           </div>
           <div className="btn_wrapper">
             <button disabled={ this.props.isLoading ? true: false } onClick={ !this.props.isLoading ? this.props.handleTrackLocationClick : () => {}}>

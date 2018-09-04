@@ -4,7 +4,7 @@ const GOOGLE_API_KEY = "AIzaSyDF0WN7OR1aJVA48G3GHkfLkxmmy6bDmdk"; // TODO: use H
 
 const graphqlURL = 'realtime-backend.herokuapp.com/v1alpha1/graphql';
 
-const wsurl = `wss://${ graphqlURL }`;
+const wsurl = `ws://${ graphqlURL }`;
 const httpurl = `https://${ graphqlURL }`;
 
 const HASURA_LOCATION = {

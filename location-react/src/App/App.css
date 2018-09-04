@@ -32,6 +32,14 @@ pre {
   margin-bottom: 10px;
 }
 
+.subscription_query {
+  text-align: left;
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 0px;
+  margin-bottom: 10px;
+}
+
 .request_block {
   border-right: 1px solid #eee;
 }

@@ -127,14 +127,8 @@ class Driver extends Component { constructor() {
 
                       return (
                         <div className="list_of_drivers">
-                          <h3>
-                            Commuter Info
-                          </h3>
-                          <div className={ 'driver_text' }>
-                            (Location is updated every 3 secs to simulate live tracking)
-                          </div>
                           <div>
-                            <b>Commuter ID</b>: { this.state.driverId }
+                            <b>Vehicle ID</b>: { this.state.driverId }
                           </div>
                         </div>
                       );
