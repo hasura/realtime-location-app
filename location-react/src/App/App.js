@@ -60,7 +60,7 @@ class App extends Component {
               return (
                 <div style={ driverLocation }>
                   <div className="row ">
-                    <div className="col-md-6 request_block">
+                    <div className="col-md-6 col-xs-12 request_block">
                       <div className="subscription_wrapper">
                         <h4>Hasura Subscription request</h4>
                         <div className="subscription_query">
@@ -71,7 +71,7 @@ class App extends Component {
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-6 col-xs-12">
                       <h4>Live tracking</h4>
                       <div className="map_wrapper">
                         <GoogleApiWrapper marker_location={latestLocation}/>

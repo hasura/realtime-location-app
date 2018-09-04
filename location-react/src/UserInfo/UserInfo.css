@@ -48,3 +48,8 @@
   background-color: #e0270e;
 }
 
+@media (max-width: 767px) {
+  .user_info {
+    width: 90%;
+  }
+}
