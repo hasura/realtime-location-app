@@ -8,9 +8,9 @@ import {
   GOOGLE_API_KEY,
   bounds,
   HASURA_LOCATION
-} from './constants'
+} from '../constants'
 
-import drivingLoc from './drivingJson';
+import drivingLoc from '../mapInfo/drivingJson';
 
 class Marker extends Component {
   render() {

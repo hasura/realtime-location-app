@@ -6,7 +6,7 @@ import GoogleApiWrapper from "./MapContainer";
 import { ApolloConsumer, Subscription } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import client from './apollo'
+import client from '../apollo'
 import { ApolloProvider } from 'react-apollo';
 
 class App extends Component {
@@ -34,7 +34,7 @@ class App extends Component {
         }
     `;
 
-    const queryImg = require('./assets/carbon.png');
+    const queryImg = require('../assets/carbon.png');
 
     return (
       <ApolloConsumer>

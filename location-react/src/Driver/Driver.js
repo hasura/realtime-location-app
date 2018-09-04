@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
 
-import { httpurl } from './apollo';
 import { ApolloConsumer, Subscription } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import client from './apollo'
+import client, { httpurl } from '../apollo'
 import { ApolloProvider } from 'react-apollo';
 
 import uuidv4 from 'uuid/v4';
-import App from './App';
-import UserInfo from './UserInfo';
-import locationData from './location';
+import App from '../App/App';
+import UserInfo from '../UserInfo/UserInfo';
+import locationData from '../mapInfo/location';
 import './Driver.css';
 
 const { query } = require('graphqurl');
