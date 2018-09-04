@@ -4,7 +4,7 @@ import { ApolloConsumer, Subscription } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import client from '../apollo'
-import { httpurl } from '../constants';
+// import { httpurl } from '../constants';
 import { ApolloProvider } from 'react-apollo';
 
 import uuidv4 from 'uuid/v4';
@@ -13,10 +13,7 @@ import UserInfo from '../UserInfo/UserInfo';
 import locationData from '../mapInfo/location';
 import './Driver.css';
 
-const { query } = require('graphqurl');
-
-class Driver extends Component {
-  constructor() {
+class Driver extends Component { constructor() {
     super();
     this.state = {};
     this.loadDriverInfo = this.loadDriverInfo.bind(this);
@@ -49,10 +46,9 @@ class Driver extends Component {
         }
       ]
     };
-    query(
+    this.props.client.mutate(
       {
-        query: insert_driver_location,
-        endpoint: httpurl,
+        mutation: insert_driver_location,
         variables: { ...variables },
       }
     ).then((response) => {
@@ -86,10 +82,9 @@ class Driver extends Component {
         }
       ]
     };
-    query(
+    this.props.client.mutate(
       {
-        query: insert_driver,
-        endpoint: httpurl,
+        mutation: insert_driver,
         variables: { ...variables },
       }
     ).then((response) => {
@@ -161,7 +156,7 @@ class Driver extends Component {
 const ApolloWrappedComponent = () => {
   return (
     <ApolloProvider client={client}>
-      <Driver />
+      <Driver client={ client }/>
     </ApolloProvider>
   );
 };
