@@ -25,7 +25,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "now-start": "serve -s build",
+    "now-start": "serve --single ./build",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
