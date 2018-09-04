@@ -14,18 +14,18 @@ class App extends Component {
     super(props);
 
     this.state = {
-      driverId: props.driverId,
+      vehicleId: props.vehicleId,
     }
   }
   componentWillReceiveProps(nextProps) {
-    if ( nextProps.driverId !== this.props.driverId ) {
-      this.setState({ ...this.state, driverId: nextProps.driverId });
+    if ( nextProps.vehicleId !== this.props.vehicleId ) {
+      this.setState({ ...this.state, vehicleId: nextProps.vehicleId });
     }
   }
   render() {
     const LOCATION_SUBSCRIPTION = gql`
-        subscription getLocation($driverId: Int!) {
-            driver(where: {id: {_eq: $driverId}}) {
+        subscription getLocation($vehicleId: Int!) {
+            vehicle(where: {id: {_eq: $vehicleId}}) {
                 locations(order_by: timestamp_desc, limit: 1) {
                     location
                     timestamp
@@ -39,18 +39,18 @@ class App extends Component {
     return (
       <ApolloConsumer>
         {client => (
-          <Subscription subscription={LOCATION_SUBSCRIPTION} variables={{driverId: this.props.driverId}}>
+          <Subscription subscription={LOCATION_SUBSCRIPTION} variables={{vehicleId: this.props.vehicleId}}>
             {({ loading, error, data }) => {
               if (loading) return <p>Loading...</p>;
               if (error) return <p>Error! </p>;
 
               let latestLocation = null;
-              const driver = data.driver[0];
-              const latestLocationObject = driver.locations[0];
+              const vehicle = data.vehicle[0];
+              const latestLocationObject = vehicle.locations[0];
               if (latestLocationObject) {
                 latestLocation = latestLocationObject.location;
               }
-              const driverLocation = {
+              const vehicleLocation = {
                 'width': '100%',
                 'marginBottom': '20px',
               };
@@ -58,7 +58,7 @@ class App extends Component {
                 'width': '100%',
               };
               return (
-                <div style={ driverLocation }>
+                <div style={ vehicleLocation }>
                   <div className="row ">
                     <div className="col-md-6 col-xs-12 request_block">
                       <div className="subscription_wrapper">
@@ -92,7 +92,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  driverId: PropTypes.string.isRequired,
+  vehicleId: PropTypes.string.isRequired,
 };
 
 const ApolloWrappedComponent = (props) => {

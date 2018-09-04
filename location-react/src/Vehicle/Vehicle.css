@@ -1,4 +1,4 @@
-.list_of_drivers {
+.list_of_vehicles {
   width: 50%;
   margin: 0 auto;
   padding-bottom: 20px;
@@ -6,17 +6,17 @@
   margin-bottom: 20px;
 }
 
-.list_of_drivers h3 {
+.list_of_vehicles h3 {
   margin-bottom: 0px;
 }
 
-.list_of_drivers .driver_text {
+.list_of_vehicles .vehicle_text {
   font-size: 12px;
   display: inline-block;
   font-weight: 500;
   margin-bottom: 10px;
 }
 
-.list_of_drivers .commuter_info {
+.list_of_vehicles .commuter_info {
   font-size: 14px;
 }

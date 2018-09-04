@@ -11,14 +11,14 @@ import uuidv4 from 'uuid/v4';
 import App from '../App/App';
 import UserInfo from '../UserInfo/UserInfo';
 import locationData from '../mapInfo/location';
-import './Driver.css';
+import './Vehicle.css';
 
-class Driver extends Component { constructor() {
+class Vehicle extends Component { constructor() {
     super();
     this.state = {};
-    this.loadDriverInfo = this.loadDriverInfo.bind(this);
-    this.state.driverInfo = {};
-    this.state.driverId = uuidv4();
+    this.loadVehicleInfo = this.loadVehicleInfo.bind(this);
+    this.state.vehicleInfo = {};
+    this.state.vehicleId = uuidv4();
     this.state.startTracking = false;
     this.state.delay = 3000;
     this.state.locationId = 0;
@@ -29,9 +29,9 @@ class Driver extends Component { constructor() {
     if (locationData.length === this.state.locationId) {
       this.setState({ ...this.state, locationId: 0 });
     }
-    const insert_driver_location = gql`
-      mutation insert_driver_location ($objects: [driver_location_insert_input!]! )  {
-        insert_driver_location (objects: $objects){
+    const insert_vehicle_location = gql`
+      mutation insert_vehicle_location ($objects: [vehicle_location_insert_input!]! )  {
+        insert_vehicle_location (objects: $objects){
           returning {
             id
           }
@@ -41,14 +41,14 @@ class Driver extends Component { constructor() {
     const variables = {
       "objects": [
         {
-          "driver_id": this.state.driverId,
+          "vehicle_id": this.state.vehicleId,
           "location": locationData[this.state.locationId],
         }
       ]
     };
     this.props.client.mutate(
       {
-        mutation: insert_driver_location,
+        mutation: insert_vehicle_location,
         variables: { ...variables },
       }
     ).then((response) => {
@@ -57,17 +57,17 @@ class Driver extends Component { constructor() {
     })
     .catch((error) => console.error(error));
   }
-  loadDriverInfo(e) {
-    const driverId = e.target.getAttribute('data-driver-id');
-    if ( driverId ){
-      this.setState({ ...this.state, driverId: parseInt(driverId, 10)});
+  loadVehicleInfo(e) {
+    const vehicleId = e.target.getAttribute('data-vehicle-id');
+    if ( vehicleId ){
+      this.setState({ ...this.state, vehicleId: parseInt(vehicleId, 10)});
     }
   }
   handleTrackLocationClick() {
     this.setState({ ...this.state, isLoading: true });
-    const insert_driver = gql`
-      mutation insert_driver ($objects: [driver_insert_input!]! )  {
-        insert_driver (objects: $objects){
+    const insert_vehicle = gql`
+      mutation insert_vehicle ($objects: [vehicle_insert_input!]! )  {
+        insert_vehicle (objects: $objects){
           returning {
             id
           }
@@ -77,14 +77,14 @@ class Driver extends Component { constructor() {
     const variables = {
       "objects": [
         {
-          "id": this.state.driverId,
-          "name": this.state.driverId,
+          "id": this.state.vehicleId,
+          "name": this.state.vehicleId,
         }
       ]
     };
     this.props.client.mutate(
       {
-        mutation: insert_driver,
+        mutation: insert_vehicle,
         variables: { ...variables },
       }
     ).then((response) => {
@@ -102,8 +102,8 @@ class Driver extends Component { constructor() {
   }
   render() {
     const GET_USERS = gql`
-        subscription getDriver($driverId: String!) {
-          driver (where: { id: { _eq: $driverId }}) {
+        subscription getVehicle($vehicleId: String!) {
+          vehicle (where: { id: { _eq: $vehicleId }}) {
             id
             name
           }
@@ -120,15 +120,15 @@ class Driver extends Component { constructor() {
             [
               <ApolloConsumer key={'1'}>
                 {client => (
-                  <Subscription subscription={GET_USERS} variables={{ driverId: this.state.driverId }}>
+                  <Subscription subscription={GET_USERS} variables={{ vehicleId: this.state.vehicleId }}>
                     {({ loading, error, data }) => {
                       if (loading) return <p>Loading...</p>;
                       if (error) return <p>Error!</p>;
 
                       return (
-                        <div className="list_of_drivers">
+                        <div className="list_of_vehicles">
                           <div>
-                            <b>Vehicle ID</b>: { this.state.driverId }
+                            <b>Vehicle ID</b>: { this.state.vehicleId }
                           </div>
                         </div>
                       );
@@ -136,10 +136,10 @@ class Driver extends Component { constructor() {
                   </Subscription>
                 )}
               </ApolloConsumer>,
-              <App key='2' driverId={ this.state.driverId } />
+              <App key='2' vehicleId={ this.state.vehicleId } />
             ]
             :
-            <UserInfo userId={ this.state.driverId } handleTrackLocationClick={ this.handleTrackLocationClick.bind(this) } isLoading={ this.state.isLoading }/>
+            <UserInfo userId={ this.state.vehicleId } handleTrackLocationClick={ this.handleTrackLocationClick.bind(this) } isLoading={ this.state.isLoading }/>
           }
         </div>
       </div>
@@ -150,7 +150,7 @@ class Driver extends Component { constructor() {
 const ApolloWrappedComponent = () => {
   return (
     <ApolloProvider client={client}>
-      <Driver client={ client }/>
+      <Vehicle client={ client }/>
     </ApolloProvider>
   );
 };
