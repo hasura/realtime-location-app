@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 const Main = () => (
   <Router>
     <div>
-      <Route exact path="/" component={Driver} />
+      <Route exact path="/realtime_location_app" component={Driver} />
     </div>
   </Router>
 );
