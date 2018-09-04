@@ -32,6 +32,15 @@ pre {
   margin-bottom: 10px;
 }
 
+.request_block {
+  border-right: 1px solid #eee;
+}
+
+.request_block .subscription_wrapper {
+  width: 90%;
+  margin: 0 auto;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

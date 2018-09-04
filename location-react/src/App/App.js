@@ -52,20 +52,23 @@ class App extends Component {
               }
               const driverLocation = {
                 'width': '100%',
+                'marginBottom': '20px',
               };
               const queryImgStyle = {
                 'width': '100%',
               };
               return (
                 <div style={ driverLocation }>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <h4>Hasura Subscription request</h4>
-                      <div className="subscription_query">
-                        The GraphQL subscription query required to fetch the realtime location data is as below.
-                      </div>
-                      <div>
-                        <img style={ queryImgStyle } src={ queryImg } alt="Subscription query"/>
+                  <div className="row ">
+                    <div className="col-md-6 request_block">
+                      <div className="subscription_wrapper">
+                        <h4>Hasura Subscription request</h4>
+                        <div className="subscription_query">
+                          The GraphQL subscription query required to fetch the realtime location data is as below.
+                        </div>
+                        <div>
+                          <img style={ queryImgStyle } src={ queryImg } alt="Subscription query"/>
+                        </div>
                       </div>
                     </div>
                     <div className="col-md-6">
