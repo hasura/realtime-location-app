@@ -26,8 +26,6 @@ class App extends Component {
     const LOCATION_SUBSCRIPTION = gql`
         subscription getLocation($driverId: Int!) {
             driver(where: {id: {_eq: $driverId}}) {
-                name
-                vehicle_number
                 locations(order_by: timestamp_desc, limit: 1) {
                     location
                     timestamp
@@ -36,15 +34,15 @@ class App extends Component {
         }
     `;
 
-    const queryImg = require('./assets/query.jpg');
+    const queryImg = require('./assets/carbon.png');
 
     return (
       <ApolloConsumer>
         {client => (
-          <Subscription subscription={LOCATION_SUBSCRIPTION} variables={{driverId: this.state.driverId}}>
+          <Subscription subscription={LOCATION_SUBSCRIPTION} variables={{driverId: this.props.driverId}}>
             {({ loading, error, data }) => {
               if (loading) return <p>Loading...</p>;
-              if (error) return <p>Error!</p>;
+              if (error) return <p>Error! </p>;
 
               let latestLocation = null;
               const driver = data.driver[0];
@@ -53,10 +51,7 @@ class App extends Component {
                 latestLocation = latestLocationObject.location;
               }
               const driverLocation = {
-                'width': '68%',
-                'float': 'right',
-                'borderLeft': '1px solid #eee',
-                'paddingLeft': '20px',
+                'width': '100%',
               };
               const queryImgStyle = {
                 'width': '100%',
@@ -65,7 +60,10 @@ class App extends Component {
                 <div style={ driverLocation }>
                   <div className="row">
                     <div className="col-md-6">
-                      <h4>Subscription request</h4>
+                      <h4>Hasura Subscription request</h4>
+                      <div className="subscription_query">
+                        The GraphQL subscription query required to fetch the realtime location data is as below.
+                      </div>
                       <div>
                         <img style={ queryImgStyle } src={ queryImg } alt="Subscription query"/>
                       </div>
@@ -88,7 +86,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  driverId: PropTypes.number.isRequired,
+  driverId: PropTypes.string.isRequired,
 };
 
 const ApolloWrappedComponent = (props) => {

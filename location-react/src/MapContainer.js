@@ -6,8 +6,11 @@ import { fitBounds } from 'google-map-react/utils';
 
 import {
   GOOGLE_API_KEY,
-  bounds
+  bounds,
+  HASURA_LOCATION
 } from './constants'
+
+import drivingLoc from './drivingJson';
 
 class Marker extends Component {
   render() {
@@ -36,86 +39,87 @@ class Marker extends Component {
 }
 
 export class MapContainer extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {};
     this.state.mapLoaded = false;
+    this.state.latlng = {};
+    if ( this.props.marker_location ) {
+      this.state.latlng = this.getLatLng(this.props.marker_location);
+    }
   }
 	handleGoogleMapApi = (google) => {
     this.setState({ ...this.state, ...google, mapLoaded: true});
-    var directionsService = new google.maps.DirectionsService();
-    directionsService.route({
-      origin: new google.maps.LatLng(12.9395804,77.62047489999999),
-      destination: new google.maps.LatLng(12.9339364,77.61086039999999),
-			waypoints: [{
-				stopover: false,
-				location: new google.maps.LatLng(12.9400201,77.6207663)
-			},
-			{
-				stopover: false,
-				location: new google.maps.LatLng(12.940464,77.62026399999999)
-			},
-			{
-				stopover: false,
-				location: new google.maps.LatLng(12.9343753,77.6124028)
-			},
-			{
-				stopover: false,
-				location: new google.maps.LatLng(12.9316953,77.61384169999999)
-			},
-			{
-				stopover: false,
-				location: new google.maps.LatLng(12.9295913,77.61517739999999)
-			},
-			{
-				stopover: false,
-				location: new google.maps.LatLng(12.9311553,77.6098449)
-			},
-			{
-				stopover: false,
-				location: new google.maps.LatLng(12.9346852,77.60970669999999)
-			},
-			],
-      travelMode: google.maps.TravelMode.DRIVING
-    }, function(response, status) {
-			if (status === google.maps.DirectionsStatus.OK) {
-				var polyline = new google.maps.Polyline({
-					path: [],
-					strokeColor: '#0000FF',
-					strokeWeight: 8
-				});
-				var bounds = new google.maps.LatLngBounds();
+    const getPolyline = (routeJson) => {
+      var polyline = new google.maps.Polyline({
+        path: [],
+        strokeColor: '#0000FF',
+        strokeWeight: 8
+      });
+      var bounds = new google.maps.LatLngBounds();
 
-				var legs = response.routes[0].legs;
-				for (var i = 0; i < legs.length; i++) {
-					var steps = legs[i].steps;
-					for (var j = 0; j < steps.length; j++) {
-						var nextSegment = steps[j].path;
-						for (var k = 0; k < nextSegment.length; k++) {
-							polyline.getPath().push(nextSegment[k]);
-							bounds.extend(nextSegment[k]);
-						}
-					}
-				}
+      var legs = routeJson.routes[0].legs;
+      for (var i = 0; i < legs.length; i++) {
+        var steps = legs[i].steps;
+        for (var j = 0; j < steps.length; j++) {
+          var nextSegment = steps[j].path;
+          for (var k = 0; k < nextSegment.length; k++) {
+            /* Polyline requires a latLng object which has .lat() and .lng() methods */
+            polyline.getPath().push(new google.maps.LatLng(nextSegment[k]));
+            bounds.extend(new google.maps.LatLng(nextSegment[k]));
+          }
+        }
+      }
 
-				polyline.setMap(google.map);
-			} else {
-				window.alert('Directions request failed due to ' + status);
-			}
-		});
+      polyline.setMap(google.map);
+    }
+    getPolyline(drivingLoc);
 	}
-  render() {
-    let markerLocation = null;
+  componentWillReceiveProps(nextProps) {
+    if ( nextProps.marker_location !== this.props.marker_location ){
+      const nextPos = this.getLatLng(nextProps.marker_location);
+      const currPos = this.getLatLng(this.props.marker_location);
+      const newLatLng = {...currPos};
+      const currThis = this;
+			var numDeltas = 100;
+			var delay = 10; //milliseconds
+			var i = 0;
+			var deltaLat;
+			var deltaLng;
+      transition(nextPos);
 
-    const markerLocationPoint = this.props.marker_location;
-    if (markerLocationPoint) {
-      const markerLocationSplit = markerLocationPoint.replace(/[()]/g, "").split(",").map(x => x.trim());
+			function transition(result){
+				i = 0;
+				deltaLat = (nextPos.lat - currPos.lat)/numDeltas;
+				deltaLng = (nextPos.lng - currPos.lng)/numDeltas;
+				moveMarker();
+			}
 
-      markerLocation = {
+			function moveMarker(){
+        newLatLng.lat += deltaLat;
+        newLatLng.lng += deltaLng;
+        currThis.setState({ ...currThis.state, latlng: { ...newLatLng }});
+				if(i!==numDeltas){
+					i++;
+					setTimeout(moveMarker, delay);
+				}
+			} 
+    }
+  }
+  getLatLng(pos) {
+    if (pos) {
+      const markerLocationSplit = pos.replace(/[()]/g, "").split(",").map(x => x.trim());
+
+      const markerLocation = {
         lat: parseFloat(markerLocationSplit[0]),
         lng: parseFloat(markerLocationSplit[1])
       };
+      return markerLocation;
     }
+    return HASURA_LOCATION;
+  }
+  render() {
+    // let markerLocation = null;
 
     const size = {
       width: 320, // map width in pixels
@@ -136,7 +140,7 @@ export class MapContainer extends Component {
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={this.handleGoogleMapApi}
         > 
-          <Marker lat={markerLocation.lat} lng={markerLocation.lng} />
+          <Marker lat={this.state.latlng.lat ? this.state.latlng.lat : HASURA_LOCATION.lat} lng={this.state.latlng.lng ? this.state.latlng.lng : HASURA_LOCATION.lng } />
         </GoogleMapReact>
       </div>
     );

@@ -35,5 +35,7 @@ const client = new ApolloClient({
   link,
   cache: new InMemoryCache()
 });
-
+export {
+  httpurl
+};
 export default client;

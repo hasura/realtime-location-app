@@ -27,6 +27,11 @@ pre {
   padding: 10px;
 }
 
+.subscription_query {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
