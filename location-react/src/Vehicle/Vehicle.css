@@ -20,3 +20,27 @@
 .list_of_vehicles .commuter_info {
   font-size: 14px;
 }
+
+.Vehicle-footer {
+  height: 50px;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.displayFlex {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.footer-small-text {
+  padding-top: 10px;
+  font-size: .8em;
+}
+
+.hasura-logo img {
+  height: 30px;
+}

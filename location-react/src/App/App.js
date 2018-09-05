@@ -73,7 +73,7 @@ class App extends Component {
                     </div>
                     <div className="col-md-6 col-xs-12">
                       <h4>Live tracking</h4>
-                      <div className="subscription_query">
+                      <div className="tracking_info">
                         Location is updated every 3 secs to simulate live tracking
                       </div>
                       <div className="map_wrapper">

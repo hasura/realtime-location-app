@@ -110,6 +110,7 @@ class Vehicle extends Component { constructor() {
         }
     `;
 
+    const hasuraImg = require('../assets/hasura_logo.png');
     return (
       <div className="App">
         <header className="App-header">
@@ -142,6 +143,28 @@ class Vehicle extends Component { constructor() {
             <UserInfo userId={ this.state.vehicleId } handleTrackLocationClick={ this.handleTrackLocationClick.bind(this) } isLoading={ this.state.isLoading }/>
           }
         </div>
+        { this.state.startTracking ? (
+          <footer className="Vehicle-footer displayFlex">
+            <div className="container hasura-logo">
+              <a href="https://hasura.io" target="_blank" rel="noopener noreferrer">
+                Powered by <img src={ hasuraImg } alt="hasura logo" />
+              </a>
+                &nbsp; | &nbsp;
+              <a href="https://hasura-realtime-poll.herokuapp.com/console/data/schema/public" target="_blank" rel="noopener noreferrer">
+                Database
+              </a>
+              &nbsp; | &nbsp;
+              <a href="https://github.com/shahidhk/hasura-realtime-poll" target="_blank" rel="noopener noreferrer">
+                Source
+              </a>
+              <div className="footer-small-text">
+                <span>
+                  (The database resets every 30 minutes)
+                </span>
+              </div>
+            </div>
+          </footer>
+        ) : null }
       </div>
     );
   }
