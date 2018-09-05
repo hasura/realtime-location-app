@@ -150,11 +150,11 @@ class Vehicle extends Component { constructor() {
                 Powered by <img src={ hasuraImg } alt="hasura logo" />
               </a>
                 &nbsp; | &nbsp;
-              <a href="https://hasura-realtime-poll.herokuapp.com/console/data/schema/public" target="_blank" rel="noopener noreferrer">
+              <a href="https://realtime-backend.herokuapp.com/console/data/schema/public" target="_blank" rel="noopener noreferrer">
                 Database
               </a>
               &nbsp; | &nbsp;
-              <a href="https://github.com/shahidhk/hasura-realtime-poll" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/hasura/realtime-location-app" target="_blank" rel="noopener noreferrer">
                 Source
               </a>
               <div className="footer-small-text">

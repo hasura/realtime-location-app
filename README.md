@@ -35,10 +35,10 @@ hosted on GitHub pages and the Postgres+GraphQL Engine is running on Postgres.
   ```bash
   hasura migrate apply
   ```
-- Edit `HASURA_GRAPHQL_URL` in `src/apollo.js` and set it to the
+- Edit `HASURA_GRAPHQL_URL` in `src/constants.js` and set it to the
   Heroku app URL:
   ```js
-  export const HASURA_GRAPHQL_URL = 'realtime-backend2.herokuapp.com';
+  export const HASURA_GRAPHQL_URL = 'realtime-backend2.herokuapp.com/v1alpha1/graphql';
   ```
 - Run the app (go the root of repo):
   ```bash
