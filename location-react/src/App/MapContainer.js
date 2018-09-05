@@ -29,9 +29,14 @@ class Marker extends Component {
       'width':'30px',
       'position':'relative',
     };
+    const imgStyle = {
+      'width': '100%',
+    };
+    const imgSrc = require('../assets/hasura.png');
     return (
       <div style={ greatPlaceStyle }>
         <div style={ divStyle }>
+          <img style={ imgStyle } src={ imgSrc } alt="hasura logo location"/>
         </div>
       </div>
     );
