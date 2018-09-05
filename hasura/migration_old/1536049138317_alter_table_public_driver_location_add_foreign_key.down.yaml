@@ -1,3 +1,0 @@
-- args:
-    sql: ALTER TABLE public."driver_location" DROP CONSTRAINT "driver_location_driver_id_fkey"
-  type: run_sql

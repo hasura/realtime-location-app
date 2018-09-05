@@ -1,4 +1,0 @@
-- args:
-    sql: ALTER TABLE public."driver_location" ADD FOREIGN KEY ("driver_id") REFERENCES
-      public."driver" ("id")
-  type: run_sql
