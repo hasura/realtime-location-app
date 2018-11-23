@@ -154,7 +154,7 @@ class Vehicle extends Component { constructor() {
               </a>
                 &nbsp; | &nbsp;
               <a href="https://realtime-backend.herokuapp.com/console/data/schema/public" target="_blank" rel="noopener noreferrer">
-                Database
+                Backend
               </a>
               &nbsp; | &nbsp;
               <a href="https://github.com/hasura/realtime-location-app" target="_blank" rel="noopener noreferrer">
@@ -162,7 +162,7 @@ class Vehicle extends Component { constructor() {
               </a>
               <div className="footer-small-text">
                 <span>
-                  (The database resets every 30 minutes)
+                  (The backend resets every 30 minutes)
                 </span>
               </div>
             </div>
